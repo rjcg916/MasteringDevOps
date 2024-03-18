@@ -48,19 +48,9 @@
             "label": "Start Web",
             "type": "dotenv",
             "targetTasks": [
-                "Restore Web",
                 "Web npm start"
             ],
             "file": "${input:dotEnvFilePath}"
-        },
-        {
-            "label": "Restore Web",
-            "type": "shell",
-            "command": "azd restore web",
-            "presentation": {
-                "reveal": "silent"
-            },
-            "problemMatcher": []
         },
         {
             "label": "Web npm start",
@@ -92,20 +82,41 @@
             }
         },
         {
+            "label": "dotnet: build",
             "type": "dotnet",
             "task": "build",
             "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Start Cosmos Emulator",
+            "type": "shell",
+            "command": "node",
+            "args": [
+                "${workspaceFolder}/startCosmosEmulator.js"
+            ],
             "problemMatcher": [],
-            "label": "dotnet: build"
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Start Web",
+            "type": "dotenv",
+            "targetTasks": [
+                "Web npm start"
+            ],
+            "file": "${input:dotEnvFilePath}",
+            "problemMatcher": []
         }
     ],
-
     "inputs": [
         {
             "id": "dotEnvFilePath",
             "type": "promptString",
             "description": "Enter the path to your .env file",
             "default": "${workspaceFolder}/.azure/local/.env"
-          }
+        }
     ]
 }
